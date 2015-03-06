@@ -1,0 +1,9 @@
+/* Put your CSS here */
+.ember-application {
+    padding-top: 80px;
+}
+
+img.thumbs{
+	min-height: 170px;
+	max-height: 170px;
+}

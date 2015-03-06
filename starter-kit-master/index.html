@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Ember Starter Kit</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <script type="text/x-handlebars">
+        <h2>Welcome to Ember.js</h2> 
+        {{#link-to 'index'}}Index{{/link-to}} 
+        {{#link-to 'about'}}About{{/link-to}} 
+        {{#link-to 'testimonials'}}Testimonials{{/link-to}} 
+
+        {{outlet}}
+    </script>
+
+    <script type="text/x-handlebars" id="index">
+        <ul>
+            {{#each item in sortedModel}}
+            <li>{{item}}</li>
+            {{/each}}
+        </ul>
+    </script>
+
+    <script type="text/x-handlebars" id="about">
+        <h3>About Route</h3>
+        <p>This is the about route!</p>
+    </script>
+
+    <script type="text/x-handlebars" id="testimonials">
+        <h3>Testimonials</h3>
+
+        <div>
+            <label>Your Name : </label>
+            {{input type="text" value=userName size="20"}}
+
+            <label>Your Message : </label>
+            {{textarea value=message cols="20" rows="6"}}
+
+            <button {{action "saveTestimonial"}}>Save</button>
+        </div>
+
+        <div>
+            {{#if testimonials}}
+                <h4>Testimonials</h4>
+                {{#each item in testimonials}}
+                <div>
+                    <b>{{item.userName}}</b> : {{item.message}}
+                </div>
+                {{/each}}
+            {{/if}}
+        </div>
+    </script>
+
+
+    <script src="js/libs/jquery-1.10.2.js"></script>
+    <script src="js/libs/ember-template-compiler-1.10.0.js"></script>
+    <script src="js/libs/ember-1.10.0.debug.js"></script>
+    <script src="js/app.js"></script>
+    <!-- to activate the test runner, add the "?test" query string parameter -->
+    <script src="tests/runner.js"></script>
+</body>
+
+</html>
