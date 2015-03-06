@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Online Pizza Store</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+      <script type="text/x-handlebars">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#/">Online Pizza Store</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        {{#link-to 'index' tagName='li'}} {{#link-to 'index'}}Home{{/link-to}} {{/link-to}} {{#link-to 'pizzaz' tagName='li'}} {{#link-to 'pizzaz'}}Pizzaz{{/link-to}} {{/link-to}} {{#link-to 'cart' tagName='li'}} {{#link-to 'cart'}}Cart{{/link-to}} {{/link-to}} {{#link-to 'history' tagName='li'}} {{#link-to 'history'}}Order History{{/link-to}} {{/link-to}}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            {{outlet}}
+        </div>
+    </script>
+
+    <script type="text/x-handlebars" id="index">
+        <div class="jumbotron">
+            <h1>Welcome to the Online Pizza Store</h1>
+            <p>Your pizzaz will be delivered in 30 minutes or its free!!</p>
+            <p><a class="btn btn-success btn-lg" href="#" role="button">Learn more</a>
+            </p>
+        </div>
+
+        <div class="row">
+            {{#each pizza in model}} 
+                {{single-pizza pizza=pizza}} 
+            {{/each}}
+        </div>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="pizzaz">
+        {{#each pizza in model}} 
+          {{single-pizza pizza=pizza}} 
+        {{/each}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="pizza">
+        <div class="container">
+            {{back-button}}
+            <br/>
+            <br/>
+            <div class="row">
+                <div class="col-md-4">
+                    <img {{bind-attr src=image}} class="thumbs">
+                </div>
+                <div class="col-md-8">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <td>Name</td>
+                                <td>{{name}}</td>
+                            </tr>
+                            <tr>
+                                <td>Contains</td>
+                                <td>{{description}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <button type="button" {{action "addToCart"}} class="btn btn-primary">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="cart">
+        <h1>Cart</h1> 
+          {{#each cart in model}} 
+             {{single-pizza pizza=cart.pizza cart=true}} 
+          {{/each}}
+        
+          {{#if model}}
+            <div class="row" style="clear:both">
+                <button type="button" {{action "checkout"}} class="btn btn-primary">Checkout</button>
+            </div>   
+          {{/if}}
+
+          {{#unless model}}
+                No Items in your cart! 
+          {{/unless}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="history">
+        <h1>Order History</h1> 
+          <div class="col-md-4">
+          <ul>
+          {{#each order in model}} 
+             <li>
+                 {{#link-to 'history.details' order}}
+                    Order {{order.id}}
+                 {{/link-to}}
+             </li>
+          {{/each}}
+          </ul>
+        </div>
+        <div class="col-md-8">
+           {{outlet}} 
+        </div>
+          {{#unless model}}
+               You have not ordered anything yet!
+          {{/unless}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="history/details">
+        {{#if order}}
+            <h3>Order Details</h3>
+            <table class="table table-hover">
+                <tbody>
+                    {{#each o in order}} 
+                    <tr>
+                        <td>{{o.id}}</td>
+                        <td>{{o.pizza.name}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        {{/if}}
+    </script>
+
+    <script type="text/x-handlebars" id="components/single-pizza">
+        <div class="col-sm-6 col-md-3">
+            <div class="thumbnail">
+                <img {{bind-attr src=pizza.image}} alt="Generic placeholder thumbnail" class="thumbs">
+                <div class="caption">
+                    <h3>{{pizza.name}}</h3>
+                    <p>{{pizza.description}}</p>
+                    {{#unless cart}}
+                    <p>{{#link-to 'pizza' pizza classNames="btn btn-primary btn-small"}}View{{/link-to}}
+                    </p>
+                    {{/unless}}
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/x-handlebars" id="components/back-button">
+        <button type="button" class="btn btn-info" {{action "back"}}>back</button>
+    </script>
+
+    <script src="js/libs/jquery-1.10.2.js"></script>
+    <script src="js/libs/bootstrap.min.js"></script>
+    <script src="js/libs/ember-template-compiler-1.10.0.js"></script>
+    <script src="js/libs/ember-1.10.0.debug.js"></script>
+    <script src="js/libs/ember-data.prod.js"></script>
+    <script src="js/fixture.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/adapters.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/models.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/components.js"></script>
+    <!-- to activate the test runner, add the "?test" query string parameter -->
+    <script src="tests/runner.js"></script>
+</body>
+
+</html>
