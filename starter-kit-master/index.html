@@ -20,7 +20,7 @@
 
     <script type="text/x-handlebars" id="index">
         <ul>
-            {{#each item in sortedModel}}
+            {{#each sortedModel as |item|}}
             <li>{{item}}</li>
             {{/each}}
         </ul>
@@ -47,7 +47,7 @@
         <div>
             {{#if testimonials}}
                 <h4>Testimonials</h4>
-                {{#each item in testimonials}}
+                {{#each testimonials as |item|}}
                 <div>
                     <b>{{item.userName}}</b> : {{item.message}}
                 </div>
@@ -58,8 +58,8 @@
 
 
     <script src="js/libs/jquery-1.10.2.js"></script>
-    <script src="js/libs/ember-template-compiler-1.10.0.js"></script>
-    <script src="js/libs/ember-1.10.0.debug.js"></script>
+    <script src="js/libs/ember-template-compiler-2.0.1.js"></script>
+    <script src="js/libs/ember-2.0.1.debug.js"></script>
     <script src="js/app.js"></script>
     <!-- to activate the test runner, add the "?test" query string parameter -->
     <script src="tests/runner.js"></script>
