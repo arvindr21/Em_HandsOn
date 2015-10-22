@@ -12,13 +12,13 @@ App.IndexRoute = Ember.Route.extend({
     }
 });
 
-App.IndexController = Ember.ArrayController.extend({
-    sortedModel: function() {
+App.IndexController = Ember.Controller.extend({
+    sortedModel: Ember.computed('model.[]', function() {
         return this.get('model').sort();
-    }.property('@each')
+    })
 });
 
-App.TestimonialsController = Ember.ObjectController.extend({
+App.TestimonialsController = Ember.Controller.extend({
     userName: '',
     message: '',
     testimonials: [],
